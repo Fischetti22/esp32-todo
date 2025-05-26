@@ -18,7 +18,8 @@ Scan QR
 
   function updateTasks() {
     const raw = document.getElementById("tasks").value;
-    const taskArray = raw.split("\\n");
+    const taskArray = raw.split("\n");   // ✅ CORRECT: splits on actual newlines
+
 
     fetch(proxyURL, {
       method: "POST",
