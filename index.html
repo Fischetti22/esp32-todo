@@ -1,1 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>To-Do for ESP32</title>
+</head>
+<body>
+  <h2>Update Tasks</h2>
+  <textarea id="tasks" rows="10" cols="30">Buy parts\nTest OLED\nScan QR</textarea><br>
+  <button onclick="updateTasks()">Update</button>
+
+  <script>
+    const binId = "6834ae718960c979a5a16436";
+    const apiKey = "$2a$10$rSY/6aF9Fr0vfFQiUTeDMOGqr0/EpCMZmEbZ8oPkIKOnqLxPJnB5qY";
+    const url = `https://api.jsonbin.io/v3/b/${binId}`;
+
+    function updateTasks() {
+      const raw = document.getElementById("tasks").value;
+      const taskArray = raw.split("\\n");
+
+      fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Master-Key": apiKey
+        },
+        body: JSON.stringify({ tasks: taskArray })
+      })
+      .then(res => res.json())
+      .then(data => alert("Tasks updated!"));
+    }
+  </script>
+</body>
+</html>
 
