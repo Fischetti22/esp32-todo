@@ -8,8 +8,8 @@
   <textarea id="tasks" rows="10" cols="30">Buy parts\nTest OLED\nScan QR</textarea><br>
   <button onclick="updateTasks()">Update</button>
 
- <script>
-  const proxyURL = "https://super-bold-triceratops.glitch.me/update"; // replace with your Glitch project URL
+<script>
+  const proxyURL = "https://super-bold-triceratops.glitch.me/update"; // ✅ must include /update
 
   function updateTasks() {
     const raw = document.getElementById("tasks").value;
@@ -27,6 +27,7 @@
     .catch(err => alert("Error: " + err));
   }
 </script>
+
 
 
 </body>
