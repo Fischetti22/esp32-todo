@@ -9,23 +9,30 @@
   <button onclick="updateTasks()">Update</button>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbxK7gnEMWv5ZQjVIWEskzdtojDgh54GeQU6drDEQo4kz7argaqXzLBSLXAKCjV3WQPg/exec";
+  const scriptURL = "https://script.google.com/macros/s/AKfycbxK7gnEMWv5ZQjVIWEskzdtojDgh54GeQU6drDEQo4kz7argaqXzLBSLXAKCjV3WQPg/exec";
 
-    function updateTasks() {
-      const raw = document.getElementById("tasks").value;
-      const taskArray = raw.split("\\n");
+  function updateTasks() {
+    const raw = document.getElementById("tasks").value;
+    const taskArray = raw.split("\\n");
+    const payload = JSON.stringify({ tasks: taskArray });
 
-      fetch(scriptURL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ tasks: taskArray })
-      })
-      .then(res => res.text())
-      .then(data => alert("Tasks updated!"))
-      .catch(err => alert("Error: " + err));
-    }
-  </script>
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", scriptURL, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          alert("Tasks updated!");
+        } else {
+          alert("Error: " + xhr.statusText);
+        }
+      }
+    };
+
+    xhr.send(payload);
+  }
+</script>
+
 </body>
 </html>
