@@ -9,25 +9,22 @@
   <button onclick="updateTasks()">Update</button>
 
   <script>
-    const binId = "68343e718960c979a5a16436";  // ✅ corrected Bin ID
-    const apiKey = "$2a$10$rSY/6aF9Fr0vfFQiUTeDMOGqr0/EpCMZmEbZ8oPkIKOnqLxPJnB5qY";
-    const url = `https://api.jsonbin.io/v3/b/${binId}`;
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxK7gnEMWv5ZQjVIWEskzdtojDgh54GeQU6drDEQo4kz7argaqXzLBSLXAKCjV3WQPg/exec";
 
     function updateTasks() {
       const raw = document.getElementById("tasks").value;
       const taskArray = raw.split("\\n");
 
-      fetch(url, {
-        method: "PUT",
+      fetch(scriptURL, {
+        method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "X-Access-Key": apiKey
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({ tasks: taskArray })
       })
-      .then(res => res.json())
+      .then(res => res.text())
       .then(data => alert("Tasks updated!"))
-      .catch(err => alert("Error updating: " + err));
+      .catch(err => alert("Error: " + err));
     }
   </script>
 </body>
