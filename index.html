@@ -8,31 +8,26 @@
   <textarea id="tasks" rows="10" cols="30">Buy parts\nTest OLED\nScan QR</textarea><br>
   <button onclick="updateTasks()">Update</button>
 
-  <script>
-  const scriptURL = "https://script.google.com/macros/s/AKfycbxK7gnEMWv5ZQjVIWEskzdtojDgh54GeQU6drDEQo4kz7argaqXzLBSLXAKCjV3WQPg/exec";
+ <script>
+  const proxyURL = "https://your-project-name.glitch.me/update"; // replace with your Glitch project URL
 
   function updateTasks() {
     const raw = document.getElementById("tasks").value;
     const taskArray = raw.split("\\n");
-    const payload = JSON.stringify({ tasks: taskArray });
 
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", scriptURL, true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          alert("Tasks updated!");
-        } else {
-          alert("Error: " + xhr.statusText);
-        }
-      }
-    };
-
-    xhr.send(payload);
+    fetch(proxyURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ tasks: taskArray })
+    })
+    .then(res => res.text())
+    .then(data => alert("Tasks updated!"))
+    .catch(err => alert("Error: " + err));
   }
 </script>
+
 
 </body>
 </html>
